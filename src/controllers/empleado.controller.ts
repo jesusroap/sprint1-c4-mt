@@ -1,3 +1,4 @@
+import {authenticate} from '@loopback/authentication';
 import {service} from '@loopback/core';
 import {
   Count,
@@ -23,6 +24,7 @@ import {Credenciales, Empleado} from '../models';
 import {EmpleadoRepository} from '../repositories';
 import {AutenticacionService, NotificacionService} from '../services';
 
+// @authenticate("admin")
 export class EmpleadoController {
   constructor(
     @repository(EmpleadoRepository)
@@ -33,6 +35,7 @@ export class EmpleadoController {
     public servicioAutenticacion: AutenticacionService
   ) {}
 
+  // @authenticate.skip()
   @post("/identificarPersona", {
     responses: {
       '200': {
@@ -109,6 +112,7 @@ export class EmpleadoController {
     return this.empleadoRepository.count(where);
   }
 
+  @authenticate("admin")
   @get('/empleados')
   @response(200, {
     description: 'Array of Empleado model instances',

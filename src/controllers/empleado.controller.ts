@@ -1,3 +1,4 @@
+import {service} from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -16,15 +17,48 @@ import {
   del,
   requestBody,
   response,
+  HttpErrors,
 } from '@loopback/rest';
-import {Empleado} from '../models';
+import {Credenciales, Empleado} from '../models';
 import {EmpleadoRepository} from '../repositories';
+import {AutenticacionService, NotificacionService} from '../services';
 
 export class EmpleadoController {
   constructor(
     @repository(EmpleadoRepository)
     public empleadoRepository : EmpleadoRepository,
+    @service(NotificacionService)
+    public notificacion: NotificacionService,
+    @service(AutenticacionService)
+    public servicioAutenticacion: AutenticacionService
   ) {}
+
+  @post("/identificarPersona", {
+    responses: {
+      '200': {
+        description: "Identificación de usuario"
+      }
+    }
+  })
+  async identificarPersona(
+    @requestBody() credenciales: Credenciales
+  ) {
+    let p = await this.servicioAutenticacion.IdentificacionPersona(credenciales.usuario, credenciales.clave)
+
+    if (p) {
+      let token = this.servicioAutenticacion.GenerarTokenJWT(p);
+      return {
+        datos: {
+          nombre: p.Nombres,
+          correo: p.Email,
+          id: p.id
+        },
+        tk: token
+      }
+    } else {
+      throw new HttpErrors[401]("Datos inválidos");
+    }
+  }
 
   @post('/empleados')
   @response(200, {
@@ -44,7 +78,24 @@ export class EmpleadoController {
     })
     empleado: Omit<Empleado, 'id'>,
   ): Promise<Empleado> {
-    return this.empleadoRepository.create(empleado);
+
+    let clave = this.servicioAutenticacion.GenerarClave();
+    let claveCifrada = this.servicioAutenticacion.CifrarClave(clave);
+    empleado.Clave = claveCifrada;
+    let p = await this.empleadoRepository.create(empleado);
+
+    // Notificaciones
+    let destino = empleado.Email;
+    let telefono = empleado.Telefono;
+    let asunto = 'Registro en la plataforma';
+    let contenido = `Hola ${empleado.Nombres}, su nombre de usuario es: ${empleado.Email} y su contraseña es: ${clave}`;
+
+    this.notificacion.EnviarNotificacionesPorSMS(telefono, contenido);
+
+    this.notificacion.EnviarNotificacionesPorCorreo(destino, asunto, contenido);
+
+    return p;
+
   }
 
   @get('/empleados/count')

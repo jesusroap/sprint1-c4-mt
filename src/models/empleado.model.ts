@@ -70,6 +70,12 @@ export class Empleado extends Entity {
   })
   EsCliente: boolean;
 
+  @property({
+    type: 'string',
+    required: false,
+  })
+  Clave: string;
+
   @belongsTo(() => Empresa)
   empresaId: string;
 

@@ -17,8 +17,8 @@ export class NotificacionService {
 
   EnviarNotificacionesPorSMS(telefono:string, body:string):void {
 
-    const accountSid = 'AC5b00d29cf0f79ccfa8a1fe3599825a39'; // Your Account SID from www.twilio.com/console
-    const authToken = 'c6a265ef9ee1c687eeaeb21bfa615529'; // Your Auth Token from www.twilio.com/console
+    const accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
+    const authToken = process.env.TWILIO_AUTH_TOKEN; // Your Auth Token from www.twilio.com/console
 
     const twilio = require('twilio');
     const client = new twilio(accountSid, authToken);

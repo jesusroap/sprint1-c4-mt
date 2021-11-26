@@ -31,7 +31,8 @@ export class AutenticacionService {
 
   IdentificacionPersona(usuario: string, clave: string) {
     try {
-      let p = this.empleadoRepository.findOne({where: {Email: usuario, Clave: clave}});
+      let clave_e = this.CifrarClave(clave);
+      let p = this.empleadoRepository.findOne({where: {Email: usuario, Clave: clave_e}});
       if (p) {
         return p;
       }

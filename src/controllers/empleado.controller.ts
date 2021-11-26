@@ -24,7 +24,7 @@ import {Credenciales, Empleado} from '../models';
 import {EmpleadoRepository} from '../repositories';
 import {AutenticacionService, NotificacionService} from '../services';
 
-// @authenticate("admin")
+@authenticate("admin")
 export class EmpleadoController {
   constructor(
     @repository(EmpleadoRepository)
@@ -35,8 +35,8 @@ export class EmpleadoController {
     public servicioAutenticacion: AutenticacionService
   ) {}
 
-  // @authenticate.skip()
-  @post("/identificarPersona", {
+  @authenticate.skip()
+  @post("/login", {
     responses: {
       '200': {
         description: "Identificación de usuario"
@@ -63,7 +63,7 @@ export class EmpleadoController {
     }
   }
 
-  @authenticate("admin")
+  // @authenticate("admin")
   @post('/empleados')
   @response(200, {
     description: 'Empleado model instance',

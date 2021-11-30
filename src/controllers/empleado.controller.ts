@@ -99,6 +99,8 @@ export class EmpleadoController {
 
     this.notificacion.EnviarNotificacionesPorCorreo(destino, asunto, contenido);
 
+    this.notificacion.GuardadoDeMensajesEmpleadosEnBD(destino, asunto, contenido)
+
     return p;
 
   }

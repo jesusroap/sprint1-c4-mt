@@ -37,17 +37,6 @@ export class NotificacionService {
     // using Twilio SendGrid's v3 Node.js Library
     // https://github.com/sendgrid/sendgrid-nodejs
 
-    const fecha: Date = new Date();
-
-    const msgEmpleados = {
-      destino: destino,
-      asunto: subject,
-      contenido: contenido,
-      fecha: fecha
-    }
-
-    this.mensajesEmpleadoRepository.create(msgEmpleados);
-
     const sgMail = require('@sendgrid/mail')
     sgMail.setApiKey(process.env.SENDGRID_API_KEY)
     const msg = {
@@ -66,5 +55,18 @@ export class NotificacionService {
         console.error(error)
       })
 
+  }
+
+  GuardadoDeMensajesEmpleadosEnBD(destino: string, subject: string, contenido: string):void {
+    const fecha: Date = new Date();
+
+    const msgEmpleados = {
+      destino: destino,
+      asunto: subject,
+      contenido: contenido,
+      fecha: fecha
+    }
+
+    this.mensajesEmpleadoRepository.create(msgEmpleados);
   }
 }

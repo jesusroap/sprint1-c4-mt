@@ -1,0 +1,103 @@
+<h1 class="title">Crear Empleados</h1>
+<div class="container w-50">
+    <div class="row">
+        <div class="col bg-light p-5 rounded">
+            <form [formGroup]="empleadosForm" #formDirective="ngForm" (ngSubmit)="onSubmit(empleadosForm.value, formDirective)">
+                <div class="mb-3">
+                    <label for="Nombres" class="form-label">Nombres</label>
+                    <input type="text" class="form-control" formControlName="Nombres" [ngClass]="{ 'is-invalid': submitted && f['Nombres'].errors }">
+                    <div *ngIf="submitted && f['Nombres'].errors" class="invalid-feedback">
+                        <div *ngIf="f['Nombres'].errors['required']">Este campo es requerido</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Apellidos" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" formControlName="Apellidos" [ngClass]="{ 'is-invalid': submitted && f['Apellidos'].errors }">
+                    <div *ngIf="submitted && f['Apellidos'].errors" class="invalid-feedback">
+                        <div *ngIf="f['Apellidos'].errors['required']">Este campo es requerido</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Email" class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" formControlName="Email" [ngClass]="{ 'is-invalid': submitted && f['Email'].errors }">
+                    <div *ngIf="submitted && f['Email'].errors" class="invalid-feedback">
+                        <div *ngIf="f['Email'].errors['required']">Este campo es requerido</div>
+                        <div *ngIf="f['Email'].errors['email']">Por favor, ingresa tu Email</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Telefono" class="form-label">Teléfono Celular</label>
+                    <input type="tel" class="form-control" formControlName="Telefono" [ngClass]="{ 'is-invalid': submitted && f['Telefono'].errors }">
+                    <div *ngIf="submitted && f['Telefono'].errors" class="invalid-feedback">
+                        <div *ngIf="f['Telefono'].errors['required']">Este campo es requerido</div>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="Direccion" class="form-label">Dirección</label>
+                    <input type="text" class="form-control" formControlName="Direccion" [ngClass]="{ 'is-invalid': submitted && f['Direccion'].errors }">
+                    <div *ngIf="submitted && f['Direccion'].errors" class="invalid-feedback">
+                        <div *ngIf="f['Direccion'].errors['required']">Este campo es requerido</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Edad" class="form-label">Edad</label>
+                    <input type="text" class="form-control" formControlName="Edad" [ngClass]="{ 'is-invalid': submitted && f['Edad'].errors }">
+                    <div *ngIf="submitted && f['Edad'].errors" class="invalid-feedback">
+                        <div *ngIf="f['Edad'].errors['required']">Este campo es requerido</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="FechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" formControlName="FechaNacimiento" [ngClass]="{ 'is-invalid': submitted && f['FechaNacimiento'].errors }">
+                    <div *ngIf="submitted && f['FechaNacimiento'].errors" class="invalid-feedback">
+                        <div *ngIf="f['FechaNacimiento'].errors['required']">Este campo es requerido</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="Sueldo" class="form-label">Sueldo</label>
+                    <input type="number" class="form-control" formControlName="Sueldo" [ngClass]="{ 'is-invalid': submitted && f['Sueldo'].errors }">
+                    <div *ngIf="submitted && f['Sueldo'].errors" class="invalid-feedback">
+                        <div *ngIf="f['Sueldo'].errors['required']">Este campo es requerido</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="" class="form-label">Rol</label>
+                    <br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" formControlName="EsCliente" value=true [ngClass]="{ 'is-invalid': submitted && f['EsCliente'].errors }">
+                        <label class="form-check-label" for="EsCliente">
+                        Cliente
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" formControlName="EsCliente" value=false [ngClass]="{ 'is-invalid': submitted && f['EsCliente'].errors }">
+                        <label class="form-check-label" for="EsDirectivo">
+                        Directivo
+                        </label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="empresaId" class="form-label">Empresa</label>
+                    <input type="text" class="form-control" formControlName="empresaId" [ngClass]="{ 'is-invalid': submitted && f['empresaId'].errors }">
+                    <div *ngIf="submitted && f['empresaId'].errors" class="invalid-feedback">
+                        <div *ngIf="f['empresaId'].errors['required']">Este campo es requerido</div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
